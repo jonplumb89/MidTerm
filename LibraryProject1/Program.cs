@@ -162,7 +162,8 @@ namespace LibraryProject1
             Console.WriteLine("2: search by Title");
             Console.WriteLine("3: checkout book");
             Console.WriteLine("4: return book");
-            Console.WriteLine("5: Quit");
+            Console.WriteLine("5: Add Book");
+            Console.WriteLine("Quit");
             var userAnswer = int.Parse(Console.ReadLine());
             if (userAnswer == 1)
             {
@@ -192,9 +193,26 @@ namespace LibraryProject1
             {
                 Console.WriteLine("return book");
             }
+            else if (userAnswer == 5)
+            {
+                Console.WriteLine("Add book");
+                Console.WriteLine("Title:");
+                string title = Console.ReadLine();
+                Console.WriteLine("Author:");
+                string author = Console.ReadLine();
+                bookList.Add(new Book()
+                {
+                    BookID = "13:",
+                    Title = title,
+                    Author = author,
+                    Status = true,
+                    DueDate = DateTime.Now
+                });
+                FileService.WriteBookToCSV(bookList, fileName);
+            } 
             else
             {
-                Console.WriteLine("Bye Bye!!!!!");
+                Console.WriteLine("bye bye!!!!");
             }
 
         }
