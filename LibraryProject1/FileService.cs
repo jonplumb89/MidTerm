@@ -23,10 +23,10 @@ namespace LibraryProject1
         public static void WriteBookToCSV(List<Book> books, string fileName)
         {
             using StreamWriter file = new StreamWriter(fileName);
-            file.WriteLine("Author, Title, Status, DueDate");
+            file.WriteLine("BookId, Author, Title, Status, DueDate");
             foreach (var book in books)
             {
-                file.WriteLine($"{book.Author}, {book.Title}, {book.Status}, {book.DueDate}");
+                file.WriteLine($"{book.BookID}, {book.Author}, {book.Title}, {book.Status}, {book.DueDate}");
             }
         }
 
@@ -48,8 +48,8 @@ namespace LibraryProject1
                     books.Add(new Book()
                     {
                         BookID = dataArray[0],
-                        Title = dataArray[1],
-                        Author = dataArray[2],
+                        Author = dataArray[1],
+                        Title = dataArray[2],
                         Status = bool.Parse(dataArray[3]),
                         DueDate = DateTime.Parse(dataArray[4])
                     });
@@ -64,15 +64,17 @@ namespace LibraryProject1
         //author,title, or status
         public static List<Book> SearchByType(string keyword, string fileName, SearchTypeEnum searchType)
         {
+             
             //gets books from file and puts it into list of books
             List<Book> books = ConvertCSVToArray(fileName);
             var filteredBooks = books.FindAll(book =>
             {
                 // setsup string to convert proporty into string when searching
                 string proporty = searchType.ToString();
+                var test = book.GetType().GetProperty(proporty).GetValue(book, null).ToString();
                 // searches through the proporties of each book and looks for the keyword ("title", "author", "status")
                 // based on the searchType enum
-                if (book.GetType().GetProperty(proporty).GetValue(book, null).ToString() == keyword)
+                if (book.GetType().GetProperty(proporty).GetValue(book, null).ToString().Trim().ToUpper() == keyword.Trim().ToUpper())
                 {
                     return true;
                 }
@@ -83,6 +85,7 @@ namespace LibraryProject1
             return filteredBooks;
 
         }
+
 
 
         public static void AddBook(Book bookToAdd, string fileName)
@@ -114,26 +117,6 @@ namespace LibraryProject1
             });
         }
 
-
-        ////public static List<Book> SearchByType(string keyword, string fileName, SearchTypeEnum searchType)
-        //{
-        //    //gets books from file and puts it into list of books
-        //    List<Book> books = ConvertCSVToArray(fileName);
-        //    var filteredBooks = books.FindAll(book =>
-        //    {
-        //        // setsup string to convert proporty into string when searching
-        //        string proporty = searchType.ToString();
-        //        // searches through the proporties of each book and looks for the keyword ("title", "author", "status")
-        //        // based on the searchType enum
-        //        if (book.GetType().GetProperty(proporty).GetValue(book, null).ToString() == keyword)
-        //        {
-        //            return true;
-        //        }
-        //        return false;
-        //    });
-        //    //returns the list of matched books
-        //    return filteredBooks;
-        //}
         public static void CheckingOutBook(string userSelection, List<Book> bookList)
         {
             DateTime checkoutDay = DateTime.Now;

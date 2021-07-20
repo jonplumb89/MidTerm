@@ -9,7 +9,7 @@ namespace LibraryProject1
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(String.Format("{0, -3} | {1,-20} | {2, 5}", "BookID", "\t\tTitle", "\tAuthor"));
+            
             Console.WriteLine();
 
             //creating library file
@@ -117,7 +117,7 @@ namespace LibraryProject1
             });
 
             //string userSelection = "Aliette de Bodard";
-            FileService.SearchByType("Gail Carriger", fileName, SearchTypeEnum.Author);
+            //FileService.SearchByType("Gail Carriger", fileName, SearchTypeEnum.Author);
             //FileService.CheckingOutBook(userSelection, bookList, fileName);
 
             //FileService.SaveArrayAsCSV<Book>(bookList, fileName);
@@ -127,7 +127,7 @@ namespace LibraryProject1
           
             //FileService.SaveArrayAsCSV<Book>(bookList, fileName);
             FileService.WriteBookToCSV(bookList, fileName);
-            FileService.ConvertCSVToArray(fileName); 
+            FileService.ConvertCSVToArray(fileName);
             //Book newBook = new Book()
             //{
             //    Title = "jjjObsidian and Bloodsdfsdf",
@@ -137,48 +137,68 @@ namespace LibraryProject1
             //};
             //FileService.AddBook(newBook, fileName);
             //FileService.PrintBooksFile(fileName);
-            FileService.SearchByType("L. Penelope", fileName, SearchTypeEnum.Author);
-            
 
+
+            /*
+            foreach (var book in searched)
+            {
+                Console.WriteLine($"{book.BookID} Title: {book.Title} Author: {book.Author}");
+            }
+            */
             //CheckingOutBook(fileName, "Tomi Adeyemi");
             //FileService.PrintBooksFile(fileName);
-            
+            Console.WriteLine("welcome to the Library!");
+            Console.WriteLine("Current Inventory:");
+            Console.WriteLine("");
+            Console.WriteLine(String.Format("{0, -3} | {1,-20} | {2, 5}", "BookID", "\t\tTitle", "\tAuthor"));
             foreach (var book in bookList)
             {
-                Console.WriteLine($"Title: {book.Title} Author: {book.Author}");
+                Console.WriteLine($"{book.BookID,5} \t {book.Title,-35} \t {book.Author,10}");
             }
-            
+
+            Console.WriteLine("");
+            Console.WriteLine("Select a number option:");
+            Console.WriteLine("1: search by Author");
+            Console.WriteLine("2: search by Title");
+            Console.WriteLine("3: checkout book");
+            Console.WriteLine("4: return book");
+            Console.WriteLine("5: Quit");
+            var userAnswer = int.Parse(Console.ReadLine());
+            if (userAnswer == 1)
+            {
+                Console.WriteLine("author name:");
+                string userName = Console.ReadLine();
+                List<Book> Afiltered = FileService.SearchByType(userName, fileName, SearchTypeEnum.Author);
+                foreach (var book in Afiltered)
+                {
+                    Console.WriteLine($"{book.Title,5} {book.Author,-35}");
+                }
+            }
+            else if (userAnswer == 2)
+            {
+                Console.WriteLine("book title:");
+                string userName = Console.ReadLine();
+                List<Book> Afiltered = FileService.SearchByType(userName, fileName, SearchTypeEnum.Title);
+                foreach (var book in Afiltered)
+                {
+                    Console.WriteLine($"{book.Title,5} \t {book.Author,-35}");
+                }
+            }
+            else if (userAnswer == 3)
+            {
+                Console.WriteLine("checkout book");
+            }
+            else if (userAnswer == 4)
+            {
+                Console.WriteLine("return book");
+            }
+            else
+            {
+                Console.WriteLine("Bye Bye!!!!!");
+            }
+
         }
 
-        //public static void CheckingOutBook(string fileName, string userSelection)
-        //{
-        //    DateTime checkoutDay = DateTime.Now;
-        //    DateTime bookDueDate = checkoutDay.AddDays(14);
-        //    List<Book> books = FileService.ConvertCSVToArray(fileName);
-
-        //    foreach (Book b in books)
-        //    {
-        //        if (b.Title.Equals(userSelection))
-        //        {
-        //            if (b.Status.Equals(false))
-        //            {
-        //                Console.WriteLine("This book is currently checked out.");
-
-        //            }
-        //            else
-        //            {
-        //                Console.WriteLine($"{userSelection} {bookDueDate}");
-
-        //            }
-        //        }
-        //    }
-        //}
-
-        //public static void SearchByAuthor(string userInput, List<Book> bookList)
-        //{
-        //    var findBookByAuthor = bookList.Where(w => w.Author.Equals(userInput));
-        //    Console.WriteLine(findBookByAuthor);
-        //}
 
       
     }
