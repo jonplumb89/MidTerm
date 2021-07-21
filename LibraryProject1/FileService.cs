@@ -133,7 +133,8 @@ namespace LibraryProject1
                     {
                         Console.WriteLine($"{userSelection} is being checked out on : {checkoutDay:MM/dd/yyyy}.");
                         Console.WriteLine($"{userSelection} , will be due back on : {bookDueDate:MM/dd/yyyy}.");
-                        b.Status.Equals(false);
+                        b.Status = b.Status.Equals(false);
+                        
                     }
                 }
             }

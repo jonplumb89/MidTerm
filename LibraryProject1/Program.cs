@@ -7,7 +7,7 @@ namespace LibraryProject1
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             
             Console.WriteLine();
@@ -128,14 +128,15 @@ namespace LibraryProject1
             //FileService.SaveArrayAsCSV<Book>(bookList, fileName);
             FileService.WriteBookToCSV(bookList, fileName);
             FileService.ConvertCSVToArray(fileName);
-            //Book newBook = new Book()
+            //Book newBookk = new Book()
             //{
+            //    BookID = "13:",
             //    Title = "jjjObsidian and Bloodsdfsdf",
             //    Author = "jjjjAliette de Bodardsdffsf",
             //    Status = false,
             //    DueDate = DateTime.Now
             //};
-            //FileService.AddBook(newBook, fileName);
+            //FileService.AddBook(newBookk, fileName);
             //FileService.PrintBooksFile(fileName);
 
 
@@ -163,7 +164,8 @@ namespace LibraryProject1
             Console.WriteLine("3: checkout book");
             Console.WriteLine("4: return book");
             Console.WriteLine("5: Add Book");
-            Console.WriteLine("Quit");
+            Console.WriteLine("6: Display Library");
+            Console.WriteLine("7: Quit");
             var userAnswer = int.Parse(Console.ReadLine());
             if (userAnswer == 1)
             {
@@ -173,6 +175,17 @@ namespace LibraryProject1
                 foreach (var book in Afiltered)
                 {
                     Console.WriteLine($"{book.Title,5} {book.Author,-35}");
+                }
+                Console.WriteLine();
+                Console.WriteLine("return to menu? y/n");
+                string answer = Console.ReadLine();
+                if (answer == "y")
+                {
+                    Main();
+                }
+                else
+                {
+                    Console.WriteLine("bye bye!!");
                 }
             }
             else if (userAnswer == 2)
@@ -184,10 +197,25 @@ namespace LibraryProject1
                 {
                     Console.WriteLine($"{book.Title,5} \t {book.Author,-35}");
                 }
+                Console.WriteLine();
+                Console.WriteLine("return to menu? y/n");
+                string answer = Console.ReadLine();
+                if(answer == "y")
+                {
+                    Main();
+                }
+                else
+                {
+                    Console.WriteLine("bye bye!!");
+                }
             }
             else if (userAnswer == 3)
             {
-                Console.WriteLine("checkout book");
+                Console.WriteLine("check out a book, Title:");
+                string answer = Console.ReadLine();
+                FileService.CheckingOutBook(answer, bookList);
+
+                
             }
             else if (userAnswer == 4)
             {
@@ -200,16 +228,23 @@ namespace LibraryProject1
                 string title = Console.ReadLine();
                 Console.WriteLine("Author:");
                 string author = Console.ReadLine();
-                bookList.Add(new Book()
+                Book newBook = new Book()
                 {
                     BookID = "13:",
                     Title = title,
                     Author = author,
-                    Status = true,
+                    Status = false,
                     DueDate = DateTime.Now
-                });
+                };
+
+                FileService.AddBook(newBook, fileName);
                 FileService.WriteBookToCSV(bookList, fileName);
+                Main();
             } 
+            else if (userAnswer == 6)
+            {
+                Main();
+            }
             else
             {
                 Console.WriteLine("bye bye!!!!");
