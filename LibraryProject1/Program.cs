@@ -238,8 +238,17 @@ namespace LibraryProject1
                 };
 
                 FileService.AddBook(newBook, fileName);
-                FileService.WriteBookToCSV(bookList, fileName);
-                Main();
+                Console.WriteLine();
+                Console.WriteLine("return to menu? y/n");
+                string answer = Console.ReadLine();
+                if (answer == "y")
+                {
+                    Main();
+                }
+                else
+                {
+                    Console.WriteLine("bye bye!!");
+                }
             } 
             else if (userAnswer == 6)
             {
