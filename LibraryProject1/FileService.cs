@@ -95,28 +95,6 @@ namespace LibraryProject1
             WriteBookToCSV(books, fileName);
         }
 
-        //method that prints the book file when given file name
-        public static void PrintBooksFile(string fileName)
-        {
-            var books = ConvertCSVToArray(fileName);
-            PrintBooks(books);
-        }
-
-        //prints a list of books based on search preference if you make a fileservice.searchbytype as a variable and plug it 
-        //in to the list argument
-        public static void PrintBooks(List<Book> books)
-        {
-            books.ForEach(book =>
-            {
-                foreach (var proporty in typeof(Book).GetProperties())
-                {
-                    Console.Write(proporty.GetValue(book) + ", ");
-                }
-                Console.WriteLine();
-
-            });
-        }
-
         public static void CheckingOutBook(string userSelection, List<Book> bookList, string fileName)
         {
             DateTime checkoutDay = DateTime.Now;
@@ -137,6 +115,25 @@ namespace LibraryProject1
                         Console.WriteLine($"{userSelection} , will be due back on : {bookDueDate:MM/dd/yyyy}.");
                         b.Status = false;
                     }
+                }
+            }
+            WriteBookToCSV(bookList, fileName);
+        }
+
+        public static void ReturnBook(string userSelection, List<Book> bookList, string fileName)
+        {
+
+            foreach (Book b in bookList)
+            {
+                if (b.Title.Trim().Equals(userSelection) || b.Author.Equals(userSelection))
+                {
+                    
+                    if (b.Status.Equals(false))
+                    {
+                        Console.WriteLine($"{b.Title} has been returned");
+                        b.Status = true;
+                    }
+                    
                 }
             }
             WriteBookToCSV(bookList, fileName);

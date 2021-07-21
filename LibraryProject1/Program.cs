@@ -174,7 +174,9 @@ namespace LibraryProject1
                 }
                 else if (userAnswer == 4)
                 {
-                    Console.WriteLine("return book");
+                    Console.WriteLine("Return a book, Title:");
+                    string answer = Console.ReadLine();
+                    FileService.ReturnBook(answer, bookList, fileName);
                 }
                 else if (userAnswer == 5)
                 {
