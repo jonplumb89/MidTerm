@@ -117,14 +117,16 @@ namespace LibraryProject1
             });
         }
 
-        public static void CheckingOutBook(string userSelection, List<Book> bookList)
+        public static void CheckingOutBook(string userSelection, List<Book> bookList, string fileName)
         {
             DateTime checkoutDay = DateTime.Now;
             DateTime bookDueDate = checkoutDay.AddDays(14);
+            
             foreach (Book b in bookList)
             {
-                if (b.Title.Equals(userSelection) || b.Author.Equals(userSelection))
+                if (b.Title.Trim().Equals(userSelection) || b.Author.Equals(userSelection))
                 {
+                    Console.WriteLine(b.Status);
                     if (b.Status.Equals(false))
                     {
                         Console.WriteLine("This book is currently checked out.");
@@ -133,19 +135,11 @@ namespace LibraryProject1
                     {
                         Console.WriteLine($"{userSelection} is being checked out on : {checkoutDay:MM/dd/yyyy}.");
                         Console.WriteLine($"{userSelection} , will be due back on : {bookDueDate:MM/dd/yyyy}.");
-                        b.Status = b.Status.Equals(false);
-                        
+                        b.Status = false;
                     }
                 }
             }
-        }
-        //this method checked to see if the b.status.equals(false) worked or not 
-        public static void CheckTheStatus(string userSelection, List<Book> bookList)
-        {
-            foreach (Book b in bookList)
-            {
-                Console.WriteLine(b.Status.Equals(userSelection));
-            }
+            WriteBookToCSV(bookList, fileName);
         }
     }
 }

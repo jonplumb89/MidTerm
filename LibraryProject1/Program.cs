@@ -80,7 +80,7 @@ namespace LibraryProject1
                 BookID = "8:",
                 Title = "Soulless",
                 Author = "Gail Carriger",
-                Status = true,
+                Status = false,
                 DueDate = DateTime.Now
             });
             bookList.Add(new Book()
@@ -116,148 +116,104 @@ namespace LibraryProject1
                 DueDate = DateTime.Now
             });
 
-            //string userSelection = "Aliette de Bodard";
-            //FileService.SearchByType("Gail Carriger", fileName, SearchTypeEnum.Author);
-            //FileService.CheckingOutBook(userSelection, bookList, fileName);
-
             //FileService.SaveArrayAsCSV<Book>(bookList, fileName);
-            //FileService.ConvertCSVToArray(fileName);
-            //SearchByAuthor(userInput, bookList);
-
-          
-            //FileService.SaveArrayAsCSV<Book>(bookList, fileName);
-            FileService.WriteBookToCSV(bookList, fileName);
-            FileService.ConvertCSVToArray(fileName);
-            //Book newBookk = new Book()
-            //{
-            //    BookID = "13:",
-            //    Title = "jjjObsidian and Bloodsdfsdf",
-            //    Author = "jjjjAliette de Bodardsdffsf",
-            //    Status = false,
-            //    DueDate = DateTime.Now
-            //};
-            //FileService.AddBook(newBookk, fileName);
-            //FileService.PrintBooksFile(fileName);
-
-
-            /*
-            foreach (var book in searched)
-            {
-                Console.WriteLine($"{book.BookID} Title: {book.Title} Author: {book.Author}");
-            }
-            */
-            //CheckingOutBook(fileName, "Tomi Adeyemi");
-            //FileService.PrintBooksFile(fileName);
+           //FileService.WriteBookToCSV(bookList, fileName);
+            
             Console.WriteLine("welcome to the Library!");
             Console.WriteLine("Current Inventory:");
             Console.WriteLine("");
             Console.WriteLine(String.Format("{0, -3} | {1,-20} | {2, 5}", "BookID", "\t\tTitle", "\tAuthor"));
-            foreach (var book in bookList)
+            foreach (var book in FileService.ConvertCSVToArray(fileName))
             {
                 Console.WriteLine($"{book.BookID,5} \t {book.Title,-35} \t {book.Author,10}");
             }
-
-            Console.WriteLine("");
-            Console.WriteLine("Select a number option:");
-            Console.WriteLine("1: search by Author");
-            Console.WriteLine("2: search by Title");
-            Console.WriteLine("3: checkout book");
-            Console.WriteLine("4: return book");
-            Console.WriteLine("5: Add Book");
-            Console.WriteLine("6: Display Library");
-            Console.WriteLine("7: Quit");
-            var userAnswer = int.Parse(Console.ReadLine());
-            if (userAnswer == 1)
+            bookList = FileService.ConvertCSVToArray(fileName);
+            var userAnswer = 0;
+            do
             {
-                Console.WriteLine("author name:");
-                string userName = Console.ReadLine();
-                List<Book> Afiltered = FileService.SearchByType(userName, fileName, SearchTypeEnum.Author);
-                foreach (var book in Afiltered)
+                Console.WriteLine("");
+                Console.WriteLine("Select a number option:");
+                Console.WriteLine("1: search by Author");
+                Console.WriteLine("2: search by Title");
+                Console.WriteLine("3: checkout book");
+                Console.WriteLine("4: return book");
+                Console.WriteLine("5: Add Book");
+                Console.WriteLine("6: Display Library");
+                Console.WriteLine("7: Quit");
+                userAnswer = int.Parse(Console.ReadLine());
+                if (userAnswer == 1)
                 {
-                    Console.WriteLine($"{book.Title,5} {book.Author,-35}");
+                    Console.WriteLine("author name:");
+                    string userName = Console.ReadLine();
+                    List<Book> Afiltered = FileService.SearchByType(userName, fileName, SearchTypeEnum.Author);
+                    foreach (var book in Afiltered)
+                    {
+                        Console.WriteLine($"{book.Title,5} {book.Author,-35}");
+                    }
+                    Console.WriteLine();
                 }
-                Console.WriteLine();
-                Console.WriteLine("return to menu? y/n");
-                string answer = Console.ReadLine();
-                if (answer == "y")
+                else if (userAnswer == 2)
                 {
-                    Main();
+                    Console.WriteLine("book title:");
+                    string userName = Console.ReadLine();
+                    List<Book> Afiltered = FileService.SearchByType(userName, fileName, SearchTypeEnum.Title);
+                    foreach (var book in Afiltered)
+                    {
+                        Console.WriteLine($"{book.Title,5} \t {book.Author,-35}");
+                    }
+                    Console.WriteLine();
+
+                }
+                else if (userAnswer == 3)
+                {
+                    Console.WriteLine("check out a book, Title:");
+                    string answer = Console.ReadLine();
+                    FileService.CheckingOutBook(answer, bookList, fileName);
+
+
+                }
+                else if (userAnswer == 4)
+                {
+                    Console.WriteLine("return book");
+                }
+                else if (userAnswer == 5)
+                {
+                    Console.WriteLine("Add book");
+                    Console.WriteLine("Title:");
+                    string title = Console.ReadLine();
+                    Console.WriteLine("Author:");
+                    string author = Console.ReadLine();
+                    Book newBook = new Book()
+                    {
+                        BookID = "13:",
+                        Title = title,
+                        Author = author,
+                        Status = false,
+                        DueDate = DateTime.Now
+                    };
+
+                    FileService.AddBook(newBook, fileName);
+                    Console.WriteLine();
+
+                }
+                else if (userAnswer == 6)
+                {
+                    Console.WriteLine("welcome to the Library!");
+                    Console.WriteLine("Current Inventory:");
+                    Console.WriteLine("");
+                    Console.WriteLine(String.Format("{0, -3} | {1,-20} | {2, 5}", "BookID", "\t\tTitle", "\tAuthor"));
+                    foreach (var book in FileService.ConvertCSVToArray(fileName))
+                    {
+                        Console.WriteLine($"{book.BookID,5} \t {book.Title,-35} \t {book.Author,10}");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("bye bye!!");
+                    Console.WriteLine("bye bye!!!!");
                 }
             }
-            else if (userAnswer == 2)
-            {
-                Console.WriteLine("book title:");
-                string userName = Console.ReadLine();
-                List<Book> Afiltered = FileService.SearchByType(userName, fileName, SearchTypeEnum.Title);
-                foreach (var book in Afiltered)
-                {
-                    Console.WriteLine($"{book.Title,5} \t {book.Author,-35}");
-                }
-                Console.WriteLine();
-                Console.WriteLine("return to menu? y/n");
-                string answer = Console.ReadLine();
-                if(answer == "y")
-                {
-                    Main();
-                }
-                else
-                {
-                    Console.WriteLine("bye bye!!");
-                }
-            }
-            else if (userAnswer == 3)
-            {
-                Console.WriteLine("check out a book, Title:");
-                string answer = Console.ReadLine();
-                FileService.CheckingOutBook(answer, bookList);
-
-                
-            }
-            else if (userAnswer == 4)
-            {
-                Console.WriteLine("return book");
-            }
-            else if (userAnswer == 5)
-            {
-                Console.WriteLine("Add book");
-                Console.WriteLine("Title:");
-                string title = Console.ReadLine();
-                Console.WriteLine("Author:");
-                string author = Console.ReadLine();
-                Book newBook = new Book()
-                {
-                    BookID = "13:",
-                    Title = title,
-                    Author = author,
-                    Status = false,
-                    DueDate = DateTime.Now
-                };
-
-                FileService.AddBook(newBook, fileName);
-                Console.WriteLine();
-                Console.WriteLine("return to menu? y/n");
-                string answer = Console.ReadLine();
-                if (answer == "y")
-                {
-                    Main();
-                }
-                else
-                {
-                    Console.WriteLine("bye bye!!");
-                }
-            } 
-            else if (userAnswer == 6)
-            {
-                Main();
-            }
-            else
-            {
-                Console.WriteLine("bye bye!!!!");
-            }
+            while (userAnswer != 7);
+            
 
         }
 
