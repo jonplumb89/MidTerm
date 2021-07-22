@@ -102,9 +102,8 @@ namespace LibraryProject1
             
             foreach (Book b in bookList)
             {
-                if (b.Title.Trim().Equals(userSelection) || b.Author.Equals(userSelection))
+                if (b.Title.ToLower().Trim().Equals(userSelection.ToLower()) || b.Author.Equals(userSelection))
                 {
-                    Console.WriteLine(b.Status);
                     if (b.Status.Equals(false))
                     {
                         Console.WriteLine("This book is currently checked out.");
@@ -125,7 +124,7 @@ namespace LibraryProject1
 
             foreach (Book b in bookList)
             {
-                if (b.Title.Trim().Equals(userSelection) || b.Author.Equals(userSelection))
+                if (b.Title.ToLower().Trim().Equals(userSelection.ToLower()) || b.Author.Equals(userSelection))
                 {
                     
                     if (b.Status.Equals(false))

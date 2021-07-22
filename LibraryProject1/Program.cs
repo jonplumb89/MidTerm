@@ -116,8 +116,8 @@ namespace LibraryProject1
                 DueDate = DateTime.Now
             });
 
-            //FileService.SaveArrayAsCSV<Book>(bookList, fileName);
-           //FileService.WriteBookToCSV(bookList, fileName);
+            
+            //FileService.WriteBookToCSV(bookList, fileName);
             
             Console.WriteLine("welcome to the Library!");
             Console.WriteLine("Current Inventory:");
@@ -140,9 +140,28 @@ namespace LibraryProject1
                 Console.WriteLine("5: Add Book");
                 Console.WriteLine("6: Display Library");
                 Console.WriteLine("7: Quit");
+                try
+                {
+                    userAnswer = int.Parse(Console.ReadLine());
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Please make sure you enter a valid number for the option of your choice. (1-7)");
+                }
+
                 userAnswer = int.Parse(Console.ReadLine());
+
                 if (userAnswer == 1)
                 {
+                    try
+                {
+                    userAnswer = int.Parse(Console.ReadLine());
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Please make sure you enter a valid number for the option of your choice. (1-7)");
+                }
+
                     Console.WriteLine("author name:");
                     string userName = Console.ReadLine();
                     List<Book> Afiltered = FileService.SearchByType(userName, fileName, SearchTypeEnum.Author);
@@ -209,9 +228,13 @@ namespace LibraryProject1
                         Console.WriteLine($"{book.BookID,5} \t {book.Title,-35} \t {book.Author,10}");
                     }
                 }
-                else
+                else if (userAnswer == 7) 
                 {
                     Console.WriteLine("bye bye!!!!");
+                }
+                else
+                {
+                    Console.WriteLine("please enter valid input, 1-7:");
                 }
             }
             while (userAnswer != 7);
